@@ -1,6 +1,6 @@
 ///////////////////////////////////////
 // Lecture: Hoisting
-
+/*
 //function hoisting
 calculateAge(1989);
 
@@ -21,6 +21,7 @@ retirement(1989);
 
 //variables hoisting
 
+
 console.log(age); //undefined
 var age = 23;
 
@@ -31,7 +32,7 @@ function foo(){
 }
 foo();
 console.log(age); //23
-
+*/
 
 
 ///////////////////////////////////////
@@ -60,23 +61,23 @@ console.log(age); //23
 // Example to show the differece between execution stack and scope chain
 
 
-var a = 'Hello!';
-first();
+// var a = 'Hello!';
+// first();
 
-function first() {
-    var b = 'Hi!';
-    second();
+// function first() {
+//     var b = 'Hi!';
+//     second();
 
-    function second() {
-        var c = 'Hey!';
-        third()
-    }
-}
+//     function second() {
+//         var c = 'Hey!';
+//         third()
+//     }
+// }
 
-function third() {
-    var d = 'John';
-    console.log(a + b + c + d);
-}
+// function third() {
+//     var d = 'John';
+//     console.log(a + b + c + d);
+// }
 // The function third is global, therefore the function second() has access to it. 
 // But the third function doesn't have access to the function second().
 
@@ -85,11 +86,45 @@ function third() {
 ///////////////////////////////////////
 // Lecture: The this keyword
 
+// console.log(this);
 
+// calculateAge(1986); // prints 30 and window object
 
+// function calculateAge(year){
+//     console.log(2016 - year);
+//     console.log(this);
+// }
 
+var john = {
+    name: 'john',
+    calculateAge: function (){
+        console.log(this);
+        /*
+        function innerF (){
+            console.log(this);
+        }
+        innerF(); // this will refer to window, because its a regular function.
+        */
+    }
+};
 
+john.calculateAge();
 
+// var ball = function(){
+//     console.log(this);
+// }
+
+// ball();
+
+var mike = {
+    name: 'Mike'
+};
+
+mike.calculateAge = john.calculateAge; // method borrowing
+mike.calculateAge();
+
+// in regular functions (statements or expressions) 'this' refers to global object
+// in methods 'this' refers to the object created.
 
 
 
