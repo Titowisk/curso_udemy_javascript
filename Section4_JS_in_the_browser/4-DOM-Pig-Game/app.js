@@ -9,13 +9,11 @@ GAME RULES:
 
 */
 
-var scores, roundScore, activePlayer, dice;
+var scores, roundScore, activePlayer;
 
 scores = [0,0];
 roundScore = 0;
 activePlayer = 0;
-
-dice = getRandomInt(1, 6); // both inclusive
 
 function getRandomInt (min, max){
     min = Math.ceil(min);
@@ -23,11 +21,30 @@ function getRandomInt (min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// two options to change text in a html
-//document.querySelector('#current-' + activePlayer).textContent = dice;
-document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
+// sets all numbers to 0 (game start)
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+
+//document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
 var x = document.querySelector('#score-0').textContent;
 console.log(x);
 
-document.querySelector('.dice').style.display = 'none';
+document.querySelector('.dice').style.display = 'none'; // do not display dice untils its used
+
+// https://developer.mozilla.org/en-US/docs/Web/Events
+document.querySelector('.btn-roll').addEventListener('click', function() {
+    
+    // 1. Random Number
+    var dice = getRandomInt(1, 6); // both inclusive
+
+    // 2. Display the result
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block'; // displays the dice once its rolled
+    diceDOM.src = 'dice-' + dice + '.png';
+    // 3. Update the round score IF the rolled number was NOT 1
+    document.querySelector('#current-' + activePlayer).textContent = dice;
+    
+});
