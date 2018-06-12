@@ -34,9 +34,11 @@ console.log(x);
 
 document.querySelector('.dice').style.display = 'none'; // do not display dice untils its used
 
-// https://developer.mozilla.org/en-US/docs/Web/Events
+
+// Roll Dice Buton
 document.querySelector('.btn-roll').addEventListener('click', function() {
-    
+    // https://developer.mozilla.org/en-US/docs/Web/Events
+
     // 1. Random Number
     var dice = getRandomInt(1, 6); // both inclusive
 
@@ -44,7 +46,21 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     var diceDOM = document.querySelector('.dice');
     diceDOM.style.display = 'block'; // displays the dice once its rolled
     diceDOM.src = 'dice-' + dice + '.png';
+
     // 3. Update the round score IF the rolled number was NOT 1
-    document.querySelector('#current-' + activePlayer).textContent = dice;
+    if(dice !== 1){
+        //Add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        
+    } else {
+        //Next player
+        document.getElementById('current-' + activePlayer).textContent = '0'; //set the curent to 0
+        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active'); // removes 'active' from previous player
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; // switch players
+        document.querySelector('.player-' + activePlayer + '-panel').classList.add('active'); // add 'active' to new player
+        roundScore = 0;
+        // instead of 'add' and 'remove' I could use 'toggle'
+    }
     
 });
