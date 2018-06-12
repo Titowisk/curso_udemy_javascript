@@ -37,6 +37,7 @@ function gameStartSettings() {
     document.getElementById('current-0').textContent = '0';
     document.getElementById('current-1').textContent = '0';
     document.querySelector('.dice').style.display = 'none'; // do not display dice untils its used
+    document.querySelector('.dice2').style.display = 'none';
 
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
@@ -82,16 +83,21 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
         // 1. Random Number
         var dice = getRandomInt(1, 6); // both inclusive
+        var dice2 = getRandomInt(1, 6);
 
         // 2. Display the result
         var diceDOM = document.querySelector('.dice');
         diceDOM.style.display = 'block'; // displays the dice once its rolled
         diceDOM.src = 'dice-' + dice + '.png';
 
+        diceDOM = document.querySelector('.dice2');
+        diceDOM.style.display = 'block'; // displays the dice once its rolled
+        diceDOM.src = 'dice-' + dice2 + '.png';
+
         // 3. Update the round score IF the rolled number was NOT 1
-        if(dice !== 1){
+        if((dice !== 1) && (dice2 !== 1)){
             //Add score
-            roundScore += dice;
+            roundScore += dice + dice2;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
             if((previousDiceRoll === 6) && (dice === 6)){
                 roundScore = 0;
@@ -129,6 +135,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
             document.getElementById('name-' + activePlayer).textContent = 'WINNER!!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.dice2').style.display = 'none';
             gamePlaying = false;
         } else {
             // Next player
