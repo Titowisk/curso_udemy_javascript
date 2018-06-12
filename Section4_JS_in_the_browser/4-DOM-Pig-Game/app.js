@@ -13,7 +13,7 @@ GAME RULES:
 // Game Inital Settings
 
 //// Global Variables
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, previousDiceRoll, matchGoal;
 
 gameStartSettings();
 
@@ -26,6 +26,10 @@ function gameStartSettings() {
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
+    previousDiceRoll = 0;
+
+    //match goal
+    matchGoal = document.getElementById('match-goal').value;
 
     //// sets all numbers to 0 (game start)
     document.getElementById('score-0').textContent = '0';
@@ -57,6 +61,7 @@ function nextPlayer () {
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; // switch players
     document.querySelector('.player-' + activePlayer + '-panel').classList.toggle('active'); // add 'active' to new player
     roundScore = 0;
+    previousDiceRoll = 0;
     // instead of 'add' and 'remove' I could use 'toggle'
 }
 
@@ -88,6 +93,11 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             //Add score
             roundScore += dice;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
+            if((previousDiceRoll === 6) && (dice === 6)){
+                roundScore = 0;
+                nextPlayer();
+            }
+            previousDiceRoll = dice;
             
         } else {
             //Next player
@@ -105,7 +115,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 document.querySelector('.btn-hold').addEventListener('click', function() {
     
     if(gamePlaying){
-        
+
         // Add player's Current score to Global score
         scores[activePlayer] += roundScore;
 
@@ -113,7 +123,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         document.getElementById('score-' + activePlayer).textContent = scores[activePlayer];
 
         // Check if player won
-        if(scores[activePlayer] >= 20){
+        if(scores[activePlayer] >= matchGoal){
 
             document.querySelector('.player-' + activePlayer + '-panel ').classList.add('winner');
             document.getElementById('name-' + activePlayer).textContent = 'WINNER!!';
