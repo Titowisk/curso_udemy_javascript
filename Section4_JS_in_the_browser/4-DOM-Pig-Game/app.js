@@ -9,11 +9,39 @@ GAME RULES:
 
 */
 
+///////////////////////////////////////////////////////////////////////////////////////
+// Game Inital Settings
+
+//// Global Variables
 var scores, roundScore, activePlayer;
 
-scores = [0,0];
-roundScore = 0;
-activePlayer = 0;
+gameStartSettings();
+
+///////////////////////////////////////////////////////////////////////////////////////
+// Functions
+
+function gameStartSettings() {
+
+    scores = [0,0];
+    roundScore = 0;
+    activePlayer = 0;
+
+    //// sets all numbers to 0 (game start)
+    document.getElementById('score-0').textContent = '0';
+    document.getElementById('score-1').textContent = '0';
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+    document.querySelector('.dice').style.display = 'none'; // do not display dice untils its used
+
+    document.getElementById('name-0').textContent = 'Player 1';
+    document.getElementById('name-1').textContent = 'Player 2';
+    document.querySelector('.player-0-panel').classList.remove('winner');
+    document.querySelector('.player-1-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+    
+}
 
 function getRandomInt (min, max){
     min = Math.ceil(min);
@@ -21,19 +49,23 @@ function getRandomInt (min, max){
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// sets all numbers to 0 (game start)
+function nextPlayer () {
+    //Next player
+    document.getElementById('current-' + activePlayer).textContent = '0'; //set the curent to 0
+    document.querySelector('.player-' + activePlayer + '-panel').classList.toggle('active'); // removes 'active' from previous player
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; // switch players
+    document.querySelector('.player-' + activePlayer + '-panel').classList.toggle('active'); // add 'active' to new player
+    roundScore = 0;
+    // instead of 'add' and 'remove' I could use 'toggle'
+}
 
-document.getElementById('score-0').textContent = '0';
-document.getElementById('score-1').textContent = '0';
-document.getElementById('current-0').textContent = '0';
-document.getElementById('current-1').textContent = '0';
+
 
 //document.querySelector('#current-' + activePlayer).innerHTML = '<em>' + dice + '</em>';
 
-var x = document.querySelector('#score-0').textContent;
-console.log(x);
+// var x = document.querySelector('#score-0').textContent;
+// console.log(x);
 
-document.querySelector('.dice').style.display = 'none'; // do not display dice untils its used
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Roll Dice Buton
@@ -61,15 +93,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     
 });
 
-function nextPlayer () {
-    //Next player
-    document.getElementById('current-' + activePlayer).textContent = '0'; //set the curent to 0
-    document.querySelector('.player-' + activePlayer + '-panel').classList.toggle('active'); // removes 'active' from previous player
-    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; // switch players
-    document.querySelector('.player-' + activePlayer + '-panel').classList.toggle('active'); // add 'active' to new player
-    roundScore = 0;
-    // instead of 'add' and 'remove' I could use 'toggle'
-}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 // Hold Score button
@@ -86,7 +110,6 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
 
         document.querySelector('.player-' + activePlayer + '-panel ').classList.add('winner');
         document.getElementById('name-' + activePlayer).textContent = 'WINNER!!';
-        alert('Game over player ' + activePlayer + ' won!!');
         document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
         document.querySelector('.dice').style.display = 'none';
     } else {
@@ -94,3 +117,8 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         nextPlayer();
     }    
 });
+
+///////////////////////////////////////////////////////////////////////////////////////
+// New Game Button
+
+document.querySelector('.btn-new').addEventListener('click', gameStartSettings);
