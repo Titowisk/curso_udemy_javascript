@@ -172,6 +172,7 @@ interviewQuestion()('Robert');
 interviewQuestion('designer')('Katie');
 */
 
+/*
 /////////////////////////////////////////////
 // Lecture: Immediately invoked Function Expressions (IIFE)
 
@@ -187,3 +188,48 @@ interviewQuestion('designer')('Katie');
     console.log(score >= 5);
     console.log(arg);
 })(12);
+*/
+
+/////////////////////////////////////////////
+// Lecture: Closures
+
+// after a function closes its context exectuion, the variables inside that function are still
+// accessible. So, inner functions inside that function still have access to those variables because
+// of the scope chain.
+
+// function retirement(retirementAge){
+//     a = ' years left until retirement';
+
+//     return function(yearOfBirth){
+//         var age = 2018 - yearOfBirth;
+//         console.log((retirementAge - age) + a);
+//     };
+// }
+
+// var retirementBR = retirement(65);
+// retirementBR(1989);
+
+// retirement(70)(1990);
+
+//// mini challenge rewrite interviewQuestion with closures
+
+function interviewQuestion(job){
+    d = ", tell me what is UX.";
+    t = ', tell me about teaching skills';
+    g = ', what do you do?';
+
+    return function(name){
+        if (job === 'designer'){
+            console.log(name + d);
+        } else if (job === 'teacher') {
+            console.log(name + t);
+        } else {
+            console.log(name + g);
+        }
+    };
+}
+
+var designQuestion = interviewQuestion('designer');
+designQuestion('Kylrn');
+
+interviewQuestion('teacher')('Moana');
