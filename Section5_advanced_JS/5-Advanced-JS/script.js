@@ -144,6 +144,7 @@ console.log(rates);
 /////////////////////////////////////////////
 // Lecture: Functions returning functions
 
+/*
 function interviewQuestion(job){
     if ( job === 'designer'){
         return function(name){
@@ -169,3 +170,20 @@ designerQuestion('Luke');
 // One can make a double call to call the functions
 interviewQuestion()('Robert');
 interviewQuestion('designer')('Katie');
+*/
+
+/////////////////////////////////////////////
+// Lecture: Immediately invoked Function Expressions (IIFE)
+
+// function game(){
+//     var score = Math.random() * 10;
+//     console.log(score >= 5);
+// }
+// game();
+
+// (function () {})() => function inside parentheses + call
+(function (arg) {
+    var score = Math.random() * 10;
+    console.log(score >= 5);
+    console.log(arg);
+})(12);
