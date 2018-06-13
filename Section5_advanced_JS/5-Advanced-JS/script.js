@@ -63,6 +63,7 @@ var jane = Object.create(personProto, {
 });
 */
 
+/*
 // Primitives x Objects
 // variables saves primitives in themselves 
 var a = 23;
@@ -96,3 +97,44 @@ change(age, obj); // the function change receives a copy of the 'age' value and 
 
 console.log(age);
 console.log(obj.city);
+*/
+
+/////////////////////////////////////////////
+// Lecture: Passing functions as arguments (callback functions)
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+// arrayCalc receives a function fn as an argument
+function arrayCalc(arr, fn){
+    var arrRes = [];
+    for (var i = 0; i < arr.length; i++){
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+
+// each of the functions below are passed as arguments into the function arrayCalc
+function calculateAge(year){
+    return (2018 - year);
+}
+
+function isFullAge(age){
+    return age >= 18;
+}
+
+function maxHeartRate(age){
+    if(age >= 18 && age <= 81){
+        return Math.round(206.9 - (0.67 * age));
+    } else {
+        return -1;
+    }
+}
+
+var ages = arrayCalc(years, calculateAge);
+console.log(ages);
+
+fullAges = arrayCalc(ages, isFullAge);
+console.log(fullAges);
+
+rates = arrayCalc(ages, maxHeartRate);
+console.log(rates);
