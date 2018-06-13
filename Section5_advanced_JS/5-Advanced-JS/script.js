@@ -47,6 +47,7 @@ console.log(mike.lastName);
 // javascript inheritance works through prototypes
 */
 
+/*
 // Object.create method
 var personProto = {};
 
@@ -60,3 +61,38 @@ var jane = Object.create(personProto, {
     name: { value: 'jane'},
     yearOfBirth: { value: 1984 }
 });
+*/
+
+// Primitives x Objects
+// variables saves primitives in themselves 
+var a = 23;
+var b = a;
+a = 46;
+console.log(a); // prints 46
+console.log(b); // prints 23
+
+// but with objects, they only saves the pointer
+// so both obj1 and obj2 points to the same object
+var obj1 = { name: 'john', age: 25 };
+var obj2 = obj1;
+obj1.age = 88;
+console.log(obj1.age); // prints 88
+console.log(obj2.age); // prints 88
+
+// functions
+// the same thing happens with functions
+var age = 27;
+var obj = {
+    name: 'Jonas',
+    city: 'Lisbon'
+};
+
+function change(a,b){
+    a = 30;
+    b.city = 'tokyo';
+}
+
+change(age, obj); // the function change receives a copy of the 'age' value and the address (pointer) of the object 'obj'
+
+console.log(age);
+console.log(obj.city);
