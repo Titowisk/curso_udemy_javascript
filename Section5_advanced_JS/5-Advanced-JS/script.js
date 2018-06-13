@@ -1,5 +1,6 @@
 // function constructor
 
+/*
 // one way to create object
 // var john = {
 //     name: 'John',
@@ -44,3 +45,18 @@ jake.calculateAge();
 console.log(mike.lastName);
 
 // javascript inheritance works through prototypes
+*/
+
+// Object.create method
+var personProto = {};
+
+var john =  Object.create(personProto);
+// john object HAS this attributes
+john.name = 'John';
+john.yearOfBirth = 1990;
+
+var jane = Object.create(personProto, {
+    // jane object INHERIT DIRECTLY this objects
+    name: { value: 'jane'},
+    yearOfBirth: { value: 1984 }
+});
