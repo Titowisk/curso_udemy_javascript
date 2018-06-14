@@ -190,6 +190,7 @@ interviewQuestion('designer')('Katie');
 })(12);
 */
 
+/*
 /////////////////////////////////////////////
 // Lecture: Closures
 
@@ -233,3 +234,72 @@ var designQuestion = interviewQuestion('designer');
 designQuestion('Kylrn');
 
 interviewQuestion('teacher')('Moana');
+*/
+
+/////////////////////////////////////////////
+// Lecture: Bind, call and apply
+
+var john = {
+    name: 'John',
+    age: 26,
+    job: 'teacher',
+    presentation: function (style, timeOfDay){
+        if (style === 'formal'){
+            console.log('Good ' + timeOfDay + ', ladies and gentleman! I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old.');
+        } else if(style === 'friendly') {
+            console.log('Hey! What\'s up? I\'m ' + this.name + ', I\'m a ' + this.job + ' and I\'m ' + this.age + ' years old. Have a nice ' + timeOfDay);
+        }
+    }
+};
+
+var emily = {
+    name: 'Emily',
+    age: 35,
+    job: 'designer'
+};
+
+john.presentation('friendly', 'morning');
+
+john.presentation.call(emily, 'formal', 'afternoon'); // method borrowing using 'call'
+
+john.presentation.apply(emily, ['friendly', 'night']); // method borrowing using 'apply'
+
+var johnFriendly = john.presentation.bind(john, 'friendly');
+var emilyFriendly = john.presentation.bind(emily, 'formal', 'morning');
+
+console.log('Bind Method');
+
+johnFriendly('afternoon;')
+emilyFriendly();
+
+
+//// another bind example
+//// in this case arrayCalc receveis a function fn with only one argument
+//// but if the function receveid had more than one arguments, then its
+//// necessary to bind them, so we can pre set the necessary arguments
+//// and with that the function arrayCalc continues to recevei
+//// functions fn with only one argument
+var years = [1990, 1965, 1937, 2005, 1999];
+
+function arrayCalc(arr, fn){
+    var arrRes = [];
+    for (var i = 0; i < arr.length; i++){
+        arrRes.push(fn(arr[i]));
+    }
+    return arrRes;
+}
+
+function calculateAge(year){
+    return (2018 - year);
+}
+
+function isFullAge(limit, age){
+    return age >= limit;
+}
+
+var ages = arrayCalc(years, calculateAge);
+var fullAgeJapan = arrayCalc(ages, isFullAge.bind(this, 20));
+///// bind creates a copy of the isFullAge with the argument
+//// 'limit' pre set to 20.
+console.log(ages);
+console.log(fullAgeJapan);
