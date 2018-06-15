@@ -9,16 +9,42 @@ var budgetController = (function() {
 // UI CONTROLLER
 var UIController = (function () {
     
-    //some code
+    // private
+    var DOMstrings = {
+        inputType: '.add__type',
+        inputDescription: '.add__description',
+        inputValue: '.add__value',
+        inputBtn: '.add__btn'
+    };
+    
+    // public
+    return {
+        getInput: function() {
+
+            return {
+                type: document.querySelector(DOMstrings.inputType).value, // can be 'inc' or 'exp'
+                description: document.querySelector(DOMstrings.inputDescription).value,
+                value: document.querySelector(DOMstrings.inputValue).value
+            };
+            
+        },
+        getDOMstrings: function() {
+            return DOMstrings;
+        }
+    };
 
 })();
 
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl){
 
+    var DOM = UICtrl.getDOMstrings(); // receives an object with DOMstrings;
+
     var ctrlAddItem = function(){
          
         // 1. Get the field input data
+        var input = UICtrl.getInput(); // receives an object with the inputs
+        console.log(input);
 
         // 2. Add the item to the budget controller
 
@@ -28,10 +54,9 @@ var controller = (function (budgetCtrl, UICtrl){
 
         // 5. Display the budget on the UI
 
-        console.log("Teste ctrlAddItem");
     };
     
-    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
     // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#The_event_listener_callback
     document.addEventListener('keypress', function(event) {
