@@ -38,7 +38,23 @@ var UIController = (function () {
 // GLOBAL APP CONTROLLER
 var controller = (function (budgetCtrl, UICtrl){
 
-    var DOM = UICtrl.getDOMstrings(); // receives an object with DOMstrings;
+    var setUpEventListeners = function() {
+
+        var DOM = UICtrl.getDOMstrings(); // receives an object with DOMstrings;
+
+        document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#The_event_listener_callback
+        document.addEventListener('keypress', function(event) {
+            
+            // .which is for older browsers
+            if( event.keyCode === 13 || event.which === 13){
+                event.preventDefault();
+                ctrlAddItem();
+            }
+        });
+
+    };
 
     var ctrlAddItem = function(){
          
@@ -55,20 +71,17 @@ var controller = (function (budgetCtrl, UICtrl){
         // 5. Display the budget on the UI
 
     };
-    
-    document.querySelector(DOM.inputBtn).addEventListener('click', ctrlAddItem);
 
-    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#The_event_listener_callback
-    document.addEventListener('keypress', function(event) {
-        
-        // .which is for older browsers
-        if( event.keyCode === 13 || event.which === 13){
-            event.preventDefault();
-            ctrlAddItem();
+    return {
+        init: function() {
+            console.log('Application has started.');
+            setUpEventListeners();
         }
-    });
-
+    };
+    
 })(budgetController, UIController);
 
 // The controller module has access to both Budget and UI modules
 // but it won't work the other way around.
+
+controller.init();
