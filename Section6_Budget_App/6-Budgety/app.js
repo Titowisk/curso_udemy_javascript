@@ -1,36 +1,47 @@
-// UI moduloe, Data Module and Controller
-
+// BUDGET CONTROLLER
 var budgetController = (function() {
-
-    var x = 23;
-
-    var add = function(a) {
-        return x + a;
-    };
-
-    return {
-        publicTest: function(b) {
-            console.log("add = " + add(b));
-            return add(b);
-        }
-    };
-})();
-
-var UIController = (function () {
+    
     //some code
 
 })();
 
 
-var controller = (function (budgetCtrl, UICtrl){
+// UI CONTROLLER
+var UIController = (function () {
     
-    var z = budgetCtrl.publicTest(5);
+    //some code
 
-    return {
-        anotherPublic: function() {
-            console.log("z = " + z);
-        }
+})();
+
+// GLOBAL APP CONTROLLER
+var controller = (function (budgetCtrl, UICtrl){
+
+    var ctrlAddItem = function(){
+         
+        // 1. Get the field input data
+
+        // 2. Add the item to the budget controller
+
+        // 3. Add the item to the UI
+
+        // 4. Calculate the budget
+
+        // 5. Display the budget on the UI
+
+        console.log("Teste ctrlAddItem");
     };
+    
+    document.querySelector('.add__btn').addEventListener('click', ctrlAddItem);
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#The_event_listener_callback
+    document.addEventListener('keypress', function(event) {
+        
+        // .which is for older browsers
+        if( event.keyCode === 13 || event.which === 13){
+            event.preventDefault();
+            ctrlAddItem();
+        }
+    });
 
 })(budgetController, UIController);
 
