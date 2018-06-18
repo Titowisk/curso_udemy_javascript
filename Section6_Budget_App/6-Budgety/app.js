@@ -76,18 +76,6 @@ var UIController = (function () {
     
     // public
     return {
-        getInput: function() {
-
-            return {
-                type: document.querySelector(DOMstrings.inputType).value, // can be 'inc' or 'exp'
-                description: document.querySelector(DOMstrings.inputDescription).value,
-                value: document.querySelector(DOMstrings.inputValue).value
-            };
-            
-        },
-        getDOMstrings: function() {
-            return DOMstrings;
-        },
         addListItem: function(obj, type) {
             var html, newHtml, element;
 
@@ -110,6 +98,36 @@ var UIController = (function () {
             //insert HTML into the DOM
             // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+        },
+        clearFields: function() {
+            // my choice
+            // document.querySelector(DOMstrings.inputDescription).value = "";
+            // document.querySelector(DOMstrings.inputValue).value = "";
+
+            // another choice
+
+            var fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
+
+            // https://developer.mozilla.org/en-US/docs/Web/API/NodeList
+            fields.forEach(function(current, index, obj) {
+                current.value = "";
+            });
+
+            fields[0].focus();
+            //https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
+
+        },
+        getInput: function() {
+
+            return {
+                type: document.querySelector(DOMstrings.inputType).value, // can be 'inc' or 'exp'
+                description: document.querySelector(DOMstrings.inputDescription).value,
+                value: document.querySelector(DOMstrings.inputValue).value
+            };
+            
+        },
+        getDOMstrings: function() {
+            return DOMstrings;
         }
     };
 
@@ -149,9 +167,12 @@ var controller = (function (budgetCtrl, UICtrl){
         // 3. Add the item to the UI
         UICtrl.addListItem(newItem, input.type);
 
-        // 4. Calculate the budget
+        // 4. Clear the fields
+        UICtrl.clearFields();
 
-        // 5. Display the budget on the UI
+        // 5. Calculate the budget
+
+        // 6. Display the budget on the UI
 
     };
 
