@@ -30,8 +30,8 @@ var budgetController = (function() {
     // data structure
     var data = {
         allItems: {
-            exp: [],
-            inc: []
+            exp: [], // stores Expense objects
+            inc: [] // stores Income objects
         },
         totals: {
             exp: 0,
@@ -42,6 +42,7 @@ var budgetController = (function() {
     };
 
     return {
+
         addItem: function(type, description, value){
             var newItem, ID;
 
@@ -67,6 +68,24 @@ var budgetController = (function() {
             // return the newly created item
             return newItem;
         },
+
+        deleteItem: function(type, id){
+            var ids, index;
+
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+            ids = data.allItems[type].map(function(current){
+                return current.id;
+            });
+
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+
+        },
+
         calculateBudget: function() {
            
             // calculate total income and expenses
@@ -84,6 +103,7 @@ var budgetController = (function() {
             }
 
         },
+
         getBudget: function() {
           return {
               budget: data.budget,
@@ -92,6 +112,7 @@ var budgetController = (function() {
               percentage: data.percentage
           };  
         },
+
         test: function(){
             return data;
         }
@@ -266,11 +287,12 @@ var controller = (function (budgetCtrl, UICtrl){
         if(itemID){
 
             splitID = itemID.split('-');
-            type = splitID[0];
-            ID = splitID[1];
+            type = splitID[0]; // string
+            ID = parseInt(splitID[1]); // must be an integer
         }
         
         // 1. delete the item from the data structure
+        budgetCtrl.deleteItem(type, ID);
 
         // 2. delete the item from UI
 
@@ -293,3 +315,6 @@ var controller = (function (budgetCtrl, UICtrl){
 // but it won't work the other way around.
 
 controller.init();
+
+// After course practice exercise
+// 1. try to build an confirmation input to delete an item.
