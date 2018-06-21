@@ -9,6 +9,20 @@ var budgetController = (function() {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1;
+    };
+
+    Expense.prototype.calcPercentage = function (totalIncome) {
+
+        if (totalIncome > 0 ) {
+            this.percentage = Math.round( (this.value / totalIncome) * 100 );
+        } else {
+            this.percentage = -1;
+        }
+    };
+
+    Expense.prototype.getPercentage = function () {
+        return this.percentage;
     };
 
     // Income Constructor
@@ -81,7 +95,8 @@ var budgetController = (function() {
             index = ids.indexOf(id);
 
             if (index !== -1) {
-                data.allItems[type].splice(index, 1);
+                // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/splice
+                data.allItems[type].splice(index, 1); // removes one element, starting at 'index'
             }
 
         },
@@ -104,13 +119,31 @@ var budgetController = (function() {
 
         },
 
+        // calculates the percentage of each exp object and stores it in an attribute.
+        calculatePercentages: function() {
+
+            data.allItems.exp.forEach(function (cur) {
+                cur.calcPercentage(data.totals.inc); // each expense object has a calcPercentage method;
+            });
+
+        },
+
+        // stores in "allPercentages" the percentages stored in each exp object from data
+        getPercentages: function () {
+
+            var allPercentages = data.allItems.exp.map( function (cur) {
+                return cur.getPercentage();
+            });
+            return allPercentages;
+        },
+
         getBudget: function() {
-          return {
-              budget: data.budget,
-              totalInc: data.totals.inc,
-              totalExp: data.totals.exp,
-              percentage: data.percentage
-          };  
+            return {
+                budget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            };  
         },
 
         test: function(){
@@ -196,6 +229,7 @@ var UIController = (function () {
             //https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
 
         },
+
         displayBudget: function(obj) {
 
             document.querySelector(DOMstrings.budgetLabel).textContent = obj.budget;
@@ -209,6 +243,7 @@ var UIController = (function () {
             }
 
         },
+
         getInput: function() {
 
             return {
@@ -219,6 +254,7 @@ var UIController = (function () {
             };
             
         },
+
         getDOMstrings: function() {
             return DOMstrings;
         }
@@ -268,8 +304,10 @@ var controller = (function (budgetCtrl, UICtrl){
     var updatePercentages = function () {
 
         // 1. Calculate the Percentages
+        budgetCtrl.calculatePercentages();
 
-        // 2. Read percentages from budget controller
+        // 2. Read percentages from budget controller and returns a list containing all of it
+        var percentages = budgetCtrl.getPercentages();
 
         // 3. Update the UI with new percentages
 
