@@ -166,6 +166,18 @@ var UIController = (function () {
             // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
             document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
         },
+
+        deleteListItem: function (selectorID) {
+            var node;
+
+            node = document.getElementById(selectorID);
+
+            if (node.parentNode) {
+                //https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild
+                node.parentNode.removeChild(node);
+            }
+        },
+
         clearFields: function() {
             // my choice
             // document.querySelector(DOMstrings.inputDescription).value = "";
@@ -295,8 +307,10 @@ var controller = (function (budgetCtrl, UICtrl){
         budgetCtrl.deleteItem(type, ID);
 
         // 2. delete the item from UI
+        UICtrl.deleteListItem(itemID);
 
         // 3. update and show the new budget
+        updateBudget();
 
     };
 
