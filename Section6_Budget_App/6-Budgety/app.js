@@ -171,7 +171,8 @@ var UIController = (function () {
         expenseLabel: '.budget__expenses--value',
         percentageLabel: '.budget__expenses--percentage',
         container: '.container',
-        expensesPercLabel: '.item__percentage'
+        expensesPercLabel: '.item__percentage',
+        dateLabel: '.budget__title--month'
 
     };
 
@@ -312,6 +313,20 @@ var UIController = (function () {
 
         },
 
+        displayDate: function() {
+            
+            var now, year, month;
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+            now = new Date();
+            year = now.getFullYear();
+            month = now.getMonth();
+            months = ['January', 'February', 'Mach', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+
+
+        },
+
         getInput: function() {
 
             return {
@@ -442,6 +457,7 @@ var controller = (function (budgetCtrl, UICtrl){
             console.log('Application has started.');
             var initialBudget = budgetCtrl.getBudget(); // this will get all values from data that is empty yet
             UICtrl.displayBudget(initialBudget);
+            UICtrl.displayDate();
             setUpEventListeners();
         }
     };
