@@ -202,6 +202,14 @@ var UIController = (function () {
         return sign + ' ' + int + '.' + dec;
 
     };
+
+    var nodeListForEach = function (list, callback) {
+
+        for (var j = 0; j < list.length; j++) {
+            callback(list[j], j);
+        }
+
+    };
     
     // public
     return {
@@ -287,16 +295,9 @@ var UIController = (function () {
                 i++;
             });
             */
+
             // professor code
             var fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
-
-            var nodeListForEach = function (list, callback) {
-
-                for (var j = 0; j < list.length; j++) {
-                    callback(list[j], j);
-                }
-
-            };
 
             nodeListForEach(fields, function (current, index) {
 
@@ -327,6 +328,22 @@ var UIController = (function () {
 
         },
 
+        changedType: function() {
+
+            var fields = document.querySelectorAll(
+                DOMstrings.inputType + ',' +
+                DOMstrings.inputValue + ',' +
+                DOMstrings.inputDescription
+            );
+
+            nodeListForEach(fields, function(cur){
+                cur.classList.toggle('red-focus');
+            });
+
+            document.querySelector(DOMstrings.inputBtn).classList.toggle('red');
+
+        },
+
         getInput: function() {
 
             return {
@@ -351,7 +368,7 @@ var UIController = (function () {
 
 var controller = (function (budgetCtrl, UICtrl){
 
-    var setUpEventListeners = function() {
+    var setUpEventListeners = function() { // responsible for all events in the app
 
         var DOM = UICtrl.getDOMstrings(); // receives an object with DOMstrings;
 
@@ -369,6 +386,9 @@ var controller = (function (budgetCtrl, UICtrl){
 
         // event delegation
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+        // change event
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
 
     };
 
