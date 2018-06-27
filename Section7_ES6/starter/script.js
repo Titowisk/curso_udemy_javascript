@@ -168,7 +168,7 @@ var box66 = {
 // it shares the lexicall this keyword with its surroundings
 
 // box66.clickMe();
-*/
+
 function Person(name){
     this.name = name;
 }
@@ -196,5 +196,17 @@ Person.prototype.myFriends5 = (friends) => {
 
 let friends = ['Tim', 'Bob'];
 new Person('John').myFriends5(friends);
+*/
 
+//////////////////////////////////////////////////////////////////////
+// Lecture: Destructuring
 
+// ES5
+var john = ['John', 26];
+// var name = john[0];
+// var age = john[1];
+
+// ES6 
+const [name, age] = ['John', 26];
+
+// this destructuring can be used to unpack the returned values of a function :)
