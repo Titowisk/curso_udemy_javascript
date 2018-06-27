@@ -202,11 +202,52 @@ new Person('John').myFriends5(friends);
 // Lecture: Destructuring
 
 // ES5
-var john = ['John', 26];
+// var john = ['John', 26];
 // var name = john[0];
 // var age = john[1];
 
 // ES6 
-const [name, age] = ['John', 26];
+// const [name, age] = ['John', 26];
 
 // this destructuring can be used to unpack the returned values of a function :)
+
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Arrow Functions and 'this' variable
+
+var boxesArr = document.querySelectorAll('.box'); // NodeList
+
+boxesArr.forEach(function (cur){
+    cur.style.backgroundColor = 'dodgerblue';
+});
+
+// ES5
+// for (var i = 0; i < boxesArr.length; i++) {
+
+//     if (boxesArr[i].className === 'box blue'){
+//         continue;
+//     }
+//     boxesArr[i].textContent = 'I changed to Blue';
+// }
+
+// ES6
+// for (const cur of boxesArr){
+
+//     // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+//     if ( cur.className.includes('blue') ){
+//         continue;
+//     }
+//     cur.textContent = 'I changed to Blue';
+// }
+
+// ES5 
+var ages = [12, 17, 8, 21, 14, 11];
+
+var full = ages.map(function(cur){
+    return cur >= 18;
+});
+console.log(full.indexOf(true));
+
+
+// ES6
+console.log(ages.findIndex(cur => cur >= 18));
