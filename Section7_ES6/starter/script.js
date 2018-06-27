@@ -1,5 +1,6 @@
+//////////////////////////////////////////////////////////////////////
 // Lecture: let and const
-
+/*
 // ES5
 var name5 = 'Bob';
 name5 = 'Chad'; // it can change
@@ -56,3 +57,20 @@ for(let j = 0; j < 5; j++) {
 }
 
 console.log(j); // logs 23 because let is block scoped
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: let and const
+
+// ES6
+
+{
+    // works like an IIFE (they exists only inside the block)
+    let a = 1;
+    const b = 2;
+}
+
+// ES5
+(function () {
+    var c = 1;
+})();
