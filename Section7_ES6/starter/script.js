@@ -60,7 +60,7 @@ console.log(j); // logs 23 because let is block scoped
 */
 
 //////////////////////////////////////////////////////////////////////
-// Lecture: let and const
+// Lecture: Blocks and IIFES
 
 // ES6
 /*
@@ -77,8 +77,9 @@ console.log(j); // logs 23 because let is block scoped
 */
 
 //////////////////////////////////////////////////////////////////////
-// Lecture: let and const
+// Lecture: Strings
 
+/*
 let firstName = 'John';
 let lastName = 'Snow';
 const yearOfBirth = '1995';
@@ -88,3 +89,29 @@ function calcAge(yearOfBirth){
 
 // Template literals, works like python "string {0} bla bla bla {1}".format(value1, value2)
 console.log(`The man ${firstName} ${lastName}, knows nothing. He is ${calcAge(yearOfBirth)} years old.`);
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Arrow Functions
+
+// ES5
+const years = [1990, 1965, 1982, 1937];
+
+var ages5 = years.map(function (year){
+    return 2018 - year;
+});
+
+console.log(ages5);
+
+// ES6: three ways to code arrow functions
+
+var ages6 = years.map(year => 2018 - year);
+console.log(ages6);
+
+ages6 = years.map((year, index) => `Age ${index + 1}: ${2018 - year}`);
+console.log(ages6);
+
+ages6 = years.map((year, index) => {
+    return `TiAge ${index + 1}: ${2018 - year}`;
+});
+console.log(ages6);
