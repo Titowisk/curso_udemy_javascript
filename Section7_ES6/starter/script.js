@@ -63,7 +63,7 @@ console.log(j); // logs 23 because let is block scoped
 // Lecture: let and const
 
 // ES6
-
+/*
 {
     // works like an IIFE (they exists only inside the block)
     let a = 1;
@@ -74,3 +74,17 @@ console.log(j); // logs 23 because let is block scoped
 (function () {
     var c = 1;
 })();
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: let and const
+
+let firstName = 'John';
+let lastName = 'Snow';
+const yearOfBirth = '1995';
+function calcAge(yearOfBirth){
+    return 2018 - yearOfBirth;
+}
+
+// Template literals, works like python "string {0} bla bla bla {1}".format(value1, value2)
+console.log(`The man ${firstName} ${lastName}, knows nothing. He is ${calcAge(yearOfBirth)} years old.`);
