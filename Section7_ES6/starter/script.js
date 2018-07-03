@@ -255,7 +255,7 @@ console.log(ages.findIndex(cur => cur >= 18));
 
 //////////////////////////////////////////////////////////////////////
 // Lecture: Spread Operator
-
+/*
 function addFourAges(a,b,c,d){
     return a+b+c+d;
 }
@@ -265,15 +265,38 @@ console.log(sum1);
 // ES5
 
 var ages = [18, 12, 15, 25];
-var sum2 = addFourAges.apply(null, ages);
+var sum2 = addFourAges.apply(null, ages); // apply loops through each element of the array or array-like object
 console.log(sum2);
 
 // ES6 - spread operator
 
-var sum3 = addFourAges(...ages); // works like unpacking in python: funcitonCall(*args);
+var sum3 = addFourAges(...ages); // each value inside the array is assigned as one argument
 console.log(sum3);
 
 const familySmith = ['John', 'Jane', 'Mark'];
 const familySmiters = ['Mary', 'Bob', 'Flanders'];
 const bigFamily = [...familySmith, ...familySmiters];
 console.log(bigFamily);
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Rest parameters
+
+// ES5
+function isFullAge5(){
+    //console.log(arguments); https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
+    var argsArr = Array.prototype.slice.call(arguments);
+    argsArr.forEach(function(cur){
+        console.log(2018 - cur >= 18);
+    });
+}
+
+// isFullAge5(1990, 2005, 1965);
+
+// ES6
+function isFullAge6(limit, ...years) { // receives multiple individual arguments
+    years.forEach(cur => console.log(2018 - cur >= limit));
+}
+
+isFullAge6(21, 1990, 1999, 1980);
+isFullAge6(18, ...[1990, 1999, 1980]); // rest parameters with spred operator
