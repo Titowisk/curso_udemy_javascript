@@ -214,31 +214,31 @@ new Person('John').myFriends5(friends);
 
 //////////////////////////////////////////////////////////////////////
 // Lecture: Arrow Functions and 'this' variable
-
+/*
 var boxesArr = document.querySelectorAll('.box'); // NodeList
 
 boxesArr.forEach(function (cur){
     cur.style.backgroundColor = 'dodgerblue';
 });
 
-// ES5
-// for (var i = 0; i < boxesArr.length; i++) {
+//ES5
+for (var i = 0; i < boxesArr.length; i++) {
 
-//     if (boxesArr[i].className === 'box blue'){
-//         continue;
-//     }
-//     boxesArr[i].textContent = 'I changed to Blue';
-// }
+    if (boxesArr[i].className === 'box blue'){
+        continue;
+    }
+    boxesArr[i].textContent = 'I changed to Blue';
+}
 
-// ES6
-// for (const cur of boxesArr){
+//ES6
+for (const cur of boxesArr){
 
-//     // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/includes
-//     if ( cur.className.includes('blue') ){
-//         continue;
-//     }
-//     cur.textContent = 'I changed to Blue';
-// }
+    // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/String/includes
+    if ( cur.className.includes('blue') ){
+        continue;
+    }
+    cur.textContent = 'I changed to Blue';
+}
 
 // ES5 
 var ages = [12, 17, 8, 21, 14, 11];
@@ -251,3 +251,29 @@ console.log(full.indexOf(true));
 
 // ES6
 console.log(ages.findIndex(cur => cur >= 18));
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Spread Operator
+
+function addFourAges(a,b,c,d){
+    return a+b+c+d;
+}
+var sum1 = addFourAges(18, 12, 15, 25);
+console.log(sum1);
+
+// ES5
+
+var ages = [18, 12, 15, 25];
+var sum2 = addFourAges.apply(null, ages);
+console.log(sum2);
+
+// ES6 - spread operator
+
+var sum3 = addFourAges(...ages); // works like unpacking in python: funcitonCall(*args);
+console.log(sum3);
+
+const familySmith = ['John', 'Jane', 'Mark'];
+const familySmiters = ['Mary', 'Bob', 'Flanders'];
+const bigFamily = [...familySmith, ...familySmiters];
+console.log(bigFamily);
