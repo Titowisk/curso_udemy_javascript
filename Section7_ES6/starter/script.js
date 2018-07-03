@@ -325,3 +325,31 @@ function SmithPerson(fName, lName = 'Smith', yearOfBirth, nationality = 'America
 
 // maps seems like dictionaries in python
 // professor said that is better to use maps over objects, in order to use hashmaps
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Classes
+// sintax sugar for constructors :)
+
+// ES5
+// in ES5 we build objects with function constructors, and for methods
+// we use prototype or the constructors themselves.
+
+// ES6
+
+class Person6 {
+    
+    constructor (name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+
+    calculateAge () {
+        var age = new Date().getFullYear = this.yearOfBirth;
+        console.log(age);
+    }
+
+    static greeting() { // this can only be called by the class itself, not by its stances
+        console.log('Hey');
+    }
+}
