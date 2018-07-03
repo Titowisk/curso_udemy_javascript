@@ -329,12 +329,13 @@ function SmithPerson(fName, lName = 'Smith', yearOfBirth, nationality = 'America
 //////////////////////////////////////////////////////////////////////
 // Lecture: Classes
 // sintax sugar for constructors :)
-
+/*
 // ES5
 // in ES5 we build objects with function constructors, and for methods
 // we use prototype or the constructors themselves.
 
 // ES6
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
 
 class Person6 {
     
@@ -351,5 +352,75 @@ class Person6 {
 
     static greeting() { // this can only be called by the class itself, not by its stances
         console.log('Hey');
+    }
+}
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Classes and subclasses
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes
+
+// ES5
+
+var Person5 = function (name, yearOfBirth, job) {
+
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+
+}
+
+Person5.prototype.calculateAge = function () {
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+}
+
+var Athlete5 = function (name, yearOfBirth, job, olympics, medals) {
+
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
+    Person5.call(this, name, yearOfBirth, job);
+    this.olympics = olympics;
+    this.medals = medals;
+
+};
+
+Athlete5.prototype = Object.create(Person5.prototype);
+
+var johnAthlete = new Athlete5('John', '1990', 'swimmer', 3, 10);
+
+johnAthlete.calculateAge();
+
+// ES6
+
+class Person6 {
+    
+    constructor (name, yearOfBirth, job) {
+        this.name = name;
+        this.yearOfBirth = yearOfBirth;
+        this.job = job;
+    }
+
+    calculateAge () {
+        var age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }
+
+    static greeting() { // this can only be called by the class itself, not by its stances
+        console.log('Hey');
+    }
+}
+
+class Athlete6 extends Person6 { // this inherits the calculateAge method automatically
+
+    constructor (name, yearOfBirth, job, olympics, medals) {
+        super(name, yearOfBirth, job);
+        this.olympics = olympics;
+        this.medals = medals;
+        
+    }
+
+    wonMedals() {
+        this.medals++;
+        console.log(this.medals);
     }
 }
