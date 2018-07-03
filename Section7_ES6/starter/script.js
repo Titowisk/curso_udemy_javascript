@@ -304,7 +304,7 @@ isFullAge6(18, ...[1990, 1999, 1980]); // rest parameters with spred operator
 
 //////////////////////////////////////////////////////////////////////
 // Lecture: Default Parameters
-
+/*
 // ES5
 // In ES5, to use default parameters one must use if statements in order to do so
 
@@ -318,3 +318,10 @@ function SmithPerson(fName, lName = 'Smith', yearOfBirth, nationality = 'America
     this.nationality = nationality;
 
 }
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Maps
+
+// maps seems like dictionaries in python
+// professor said that is better to use maps over objects, in order to use hashmaps
