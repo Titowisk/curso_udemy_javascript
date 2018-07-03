@@ -281,7 +281,7 @@ console.log(bigFamily);
 
 //////////////////////////////////////////////////////////////////////
 // Lecture: Rest parameters
-
+/*
 // ES5
 function isFullAge5(){
     //console.log(arguments); https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments
@@ -300,3 +300,21 @@ function isFullAge6(limit, ...years) { // receives multiple individual arguments
 
 isFullAge6(21, 1990, 1999, 1980);
 isFullAge6(18, ...[1990, 1999, 1980]); // rest parameters with spred operator
+*/
+
+//////////////////////////////////////////////////////////////////////
+// Lecture: Default Parameters
+
+// ES5
+// In ES5, to use default parameters one must use if statements in order to do so
+
+// ES6
+// we can just assigned a default value in the arguments location
+function SmithPerson(fName, lName = 'Smith', yearOfBirth, nationality = 'American'){
+   
+    this.fName = fName;
+    this.lName = lName;
+    this.yearOfBirth = yearOfBirth;
+    this.nationality = nationality;
+
+}
