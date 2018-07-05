@@ -140,27 +140,51 @@
 
         // to avoi "same police origin" https://chrome.google.com/webstore/category/extensions?hl=en
 
-        function getWeather(woeid) {
-            // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-            fetch(`https://www.metaweather.com/api/location/${woeid}/`)
-            .then(result => {
-                console.log(result)
-                return result.json()
-            })
-            .then(data => {
-                // console.log(data)
+        // function getWeather(woeid) {
+        //     // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+        //     fetch(`https://www.metaweather.com/api/location/${woeid}/`)
+        //     .then(result => {
+        //         console.log(result)
+        //         return result.json()
+        //     })
+        //     .then(data => {
+        //         // console.log(data)
+        //         const today = data.consolidated_weather[0]
+        //         console.log(
+        //             `The temperature today in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`
+        //             )
+        //     })
+        //     .catch((e) => {
+        //         console.log('An error has ocurred.')
+        //     })
+
+        // }
+        // getWeather(2487956)
+        // getWeather(44418)
+
+        ///////////////////////////////////////////////////////////////////////////////////
+        // Lecture: Making AJAX calls with fetch and Async/Await
+
+        async function getWeather(woeid) {
+          
+            try {
+                const result = await fetch(`https://www.metaweather.com/api/location/${woeid}/`)
+                const data = await result.json()
+                /* fetch() returns a promise that resolves with a response to the request, successfull or not
+                this response is a body object that can be formatted in many ways, including as json
+                body.json() is a method that returns a promise that resolves with the result of parsing the body
+                text as json (javascript object notation) */
+
                 const today = data.consolidated_weather[0]
-                console.log(
-                    `The temperature today in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`
-                    )
-            })
-            .catch((e) => {
-                console.log('An error has ocurred.')
-            })
+                console.log(`The temperature today in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`)
+
+            } catch(e) {
+                console.log(`Unable to fetch data: ${e}`)
+            }
 
         }
-        getWeather(2487956)
-        getWeather(44418)
+        getWeather(2487956) // San Francisco
+        getWeather(44418) // London
         
     </script>
 </body>
