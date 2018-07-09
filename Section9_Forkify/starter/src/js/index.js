@@ -1,6 +1,14 @@
 // Global app controller
+import string from './models/Search';
+// import {add, multiply as m, ID} from './views/searchView';
 
-import num from './test'
-const x = 42
+import * as sv from './views/searchView';
 
-console.log(`I imported ${num} from another module (test.js). Variable x is ${x}.`)
+console.log(string);
+
+console.log(
+    `I can export functions and variables! 
+    Add: ${sv.add(sv.ID, 2)};
+    Multiply: ${sv.multiply(5, 5)};
+    ID: ${sv.ID}.`
+)
