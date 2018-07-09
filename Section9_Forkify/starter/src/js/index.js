@@ -1,14 +1,17 @@
 // Global app controller
-import string from './models/Search';
-// import {add, multiply as m, ID} from './views/searchView';
+// http://food2fork.com/api/search 
+// 320ed15f203d48e0f72158937fbd59bf food2fork API key
+// https://cors-anywhere.herokuapp.com/ for cors problems
+import axios from 'axios';
 
-import * as sv from './views/searchView';
-
-console.log(string);
-
-console.log(
-    `I can export functions and variables! 
-    Add: ${sv.add(sv.ID, 2)};
-    Multiply: ${sv.multiply(5, 5)};
-    ID: ${sv.ID}.`
-)
+async function getResults(query) {
+    try {
+        const key = 'aaaaaaa320ed15f203d48e0f72158937fbd59bf';
+        const proxy = 'https://cors-anywhere.herokuapp.com/';
+        const res = await axios(`${proxy}http://food2fork.com/api/search?key=${key}&q=${query}`);
+        console.log(res);
+    } catch (error) {
+        console.log(`Eita zorra!: ${error}`);
+    }
+}
+getResults('chicken');
