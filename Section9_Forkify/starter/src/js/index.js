@@ -39,8 +39,23 @@ const controlSearch = async () => {
     }
 };
 
+// Handle the results rendering
 elements.searchForm.addEventListener('submit', e => {
     e.preventDefault();
     controlSearch();
 });
 
+// Handle the pagination
+// to add event listeners to the buttons, we have to use event delegation
+// because the buttons don't exist yet
+elements.searchResPages.addEventListener('click', e => {
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest
+    const btn = e.target.closest('.btn-inline');
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto, 10);
+        console.log(goToPage);
+        searchView.clearResultsList();
+        searchView.renderResults(state.search.results, goToPage);
+    }
+   
+});
