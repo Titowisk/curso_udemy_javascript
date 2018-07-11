@@ -1,9 +1,8 @@
 /*jshint esversion: 6 */
+
 // Global app controller
-// http://food2fork.com/api/search 
-// 320ed15f203d48e0f72158937fbd59bf food2fork API key
-// https://cors-anywhere.herokuapp.com/ for cors problems
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -15,6 +14,10 @@ import { elements, renderLoader, clearLoader } from './views/base';
  */
 const state = {};
 
+
+/**
+ * SEARCH CONTROLLER
+ */
 const controlSearch = async () => {
     // 1) Get query from view
     const query = searchView.getInput();
@@ -59,3 +62,11 @@ elements.searchResPages.addEventListener('click', e => {
     }
    
 });
+
+
+/**
+ * RECIPE CONTROLLER
+ */
+
+ const r = new Recipe(35354); // cookie monster 9089e3
+//  r.getRecipe();
