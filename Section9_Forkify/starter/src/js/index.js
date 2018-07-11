@@ -33,12 +33,17 @@ const controlSearch = async () => {
         searchView.clearResultsList();
         renderLoader(elements.searchResults);
 
-        // 4) Search for recipes
-        await state.search.getResults();
+        try {
+            // 4) Search for recipes
+            await state.search.getResults();
 
-        // 5) Render the results on UI
-        clearLoader();
-        searchView.renderResults(state.search.results);
+            // 5) Render the results on UI
+            clearLoader();
+            searchView.renderResults(state.search.results);
+        } catch (error) {
+            console.log(`Something wrong with the query: ${error}`);
+            clearLoader();
+        }
     }
 };
 
@@ -67,6 +72,38 @@ elements.searchResPages.addEventListener('click', e => {
 /**
  * RECIPE CONTROLLER
  */
+const controlRecipe = async () => {
 
- const r = new Recipe(35354); // cookie monster 9089e3
-//  r.getRecipe();
+    // GET id from url
+    const id = window.location.hash.replace('#', '');
+    console.log(id);
+
+    if(id) {
+
+        // Prepare UI for changes
+
+        // Create new recipe object
+        state.recipe = new Recipe(id);
+
+        try {
+            // Get recipe data
+            await state.recipe.getRecipe();
+            // from this point, if the request end up failling, the Recipe object will be empty
+            // therefore, the following methods can throw errors. So another try/catch is needed here
+
+            // Calculate servings and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+        } catch (error) {
+            console.log(`Unable to fetch recipe :${error}`);
+        }
+        // Render recipe
+        console.log(state.recipe);
+    }
+};
+// https://developer.mozilla.org/en-US/docs/Web/API/Location
+
+// window.addEventListener('hashchange', controlRecipe);
+// window.addEventListener('load', controlRecipe);
+// Instead of the one above, the one below is better
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
