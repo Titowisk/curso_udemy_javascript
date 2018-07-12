@@ -34,14 +34,30 @@ export default class Recipe {
     }
 
     parseIngredients() {
-        const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
-        const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+        // const unitsLong = ['tablespoons', 'tablespoon', 'ounces', 'ounce', 'teaspoons', 'teaspoon', 'cups', 'pounds'];
+        // const unitsShort = ['tbsp', 'tbsp', 'oz', 'oz', 'tsp', 'tsp', 'cup', 'pound'];
+        const unitNormalizationArray = [
+            ['tablespoons', 'tbsp'],
+            ['tablespoon', 'tbsp'],
+            ['ounces', 'oz'],
+            ['ounce', 'oz'],
+            ['teaspoons', 'tsp'],
+            ['teaspoon', 'tsp'],
+            ['cups', 'cup'],
+            ['pounds', 'pound']
+        ];
+
+        const unitTable = new Map(unitNormalizationArray);
+
+        const unitSet = new Set(unitTable.values());
+        console.log(unitSet);
+
 
         const newIngredients = this.ingredients.map(el => {
             // 1) Uniform units
             let ingredient = el.toLowerCase();
-            unitsLong.forEach((unit, i) => {
-                ingredient = ingredient.replace(unit, unitsShort[i]);
+            unitTable.forEach((value, key) => {
+                ingredient = ingredient.replace(key, value);
             });
 
             // 2) Remove parentheses
@@ -51,9 +67,11 @@ export default class Recipe {
             const arrIng = ingredient.split(' '); // creates an array with the words in the ingredient sentence
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes
-            const unitIndex = arrIng.findIndex(el2 => unitsShort.includes(el2));
+            const unitIndex = arrIng.findIndex(el2 => unitSet.has(el2));
             // the firt time that .includes() returns true, the function .findIndex
             // will return the index of the current element (el2)
+            console.log(unitIndex);
+
 
             let objIng;
             if (unitIndex > -1) {
