@@ -84,10 +84,11 @@ const controlRecipe = async () => {
 
         // Create new recipe object
         state.recipe = new Recipe(id);
-
+      
         try {
-            // Get recipe data
+            // Get recipe data and parseIngredients
             await state.recipe.getRecipe();
+            state.recipe.parseIngredients();
             // from this point, if the request end up failling, the Recipe object will be empty
             // therefore, the following methods can throw errors. So another try/catch is needed here
 
