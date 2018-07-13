@@ -13,7 +13,10 @@ export const clearResultsList = () => {
 };
 
 export const clearHighLighted = previousId => {
-    document.querySelector(`a[href="#${previousId}"]`).classList.remove('results__link--active');    
+    // In case the user searchs again for another keyword, instead of choosing one of the existing
+    if ( document.querySelector(`a[href="#${previousId}"]`) ) {
+        document.querySelector(`a[href="#${previousId}"]`).classList.remove('results__link--active');    
+    }
 };
 
 export const highlightSelected = id => {
