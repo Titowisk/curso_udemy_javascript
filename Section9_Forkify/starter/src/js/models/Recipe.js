@@ -44,14 +44,14 @@ export default class Recipe {
             ['teaspoons', 'tsp'],
             ['teaspoon', 'tsp'],
             ['cups', 'cup'],
-            ['pounds', 'pound']
+            ['pounds', 'pound'],
+            ['kg', 'kg'],
+            ['g', 'g']
         ];
 
         const unitTable = new Map(unitNormalizationArray);
 
         const unitSet = new Set(unitTable.values());
-        console.log(unitSet);
-
 
         const newIngredients = this.ingredients.map(el => {
             // 1) Uniform units
@@ -70,8 +70,6 @@ export default class Recipe {
             const unitIndex = arrIng.findIndex(el2 => unitSet.has(el2));
             // the firt time that .includes() returns true, the function .findIndex
             // will return the index of the current element (el2)
-            console.log(unitIndex);
-
 
             let objIng;
             if (unitIndex > -1) {

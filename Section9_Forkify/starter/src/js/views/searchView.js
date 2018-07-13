@@ -12,6 +12,14 @@ export const clearResultsList = () => {
     elements.searchResPages.innerHTML = '';
 };
 
+export const clearHighLighted = previousId => {
+    document.querySelector(`a[href="#${previousId}"]`).classList.remove('results__link--active');    
+};
+
+export const highlightSelected = id => {
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+};
+
 const limitRecipeTitle = (title, limit=17) => {
 
     const newTitle = [];
