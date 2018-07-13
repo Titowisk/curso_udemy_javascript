@@ -3,6 +3,7 @@
 // Global app controller
 import Search from './models/Search';
 import Recipe from './models/Recipe';
+import ShoppingList from './models/ShoppingList';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import { elements, renderLoader, clearLoader } from './views/base';
@@ -62,7 +63,6 @@ elements.searchResPages.addEventListener('click', e => {
     const btn = e.target.closest('.btn-inline');
     if (btn) {
         const goToPage = parseInt(btn.dataset.goto, 10);
-        console.log(goToPage);
         searchView.clearResultsList();
         searchView.renderResults(state.search.results, goToPage);
     }
@@ -77,7 +77,6 @@ const controlRecipe = async () => {
 
     // GET id from url
     const id = window.location.hash.replace('#', '');
-    console.log(id);
 
     if(id) {
 
@@ -134,6 +133,7 @@ elements.recipePage.addEventListener('click', e => {
         recipeView.updateServingsIngredients(state.recipe);
 
     }
-    console.log(state.recipe);
 
 });
+
+window.l = new ShoppingList();
