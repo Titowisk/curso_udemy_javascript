@@ -6,6 +6,7 @@ import Recipe from './models/Recipe';
 import ShoppingList from './models/ShoppingList';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
+import * as shoppingListView from './views/shoppingListView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
 /** Global state of the app
@@ -15,6 +16,7 @@ import { elements, renderLoader, clearLoader } from './views/base';
  * - Liked recipes object
  */
 const state = {};
+window.state = state; // TESTING
 
 
 /**
@@ -23,7 +25,7 @@ const state = {};
 const controlSearch = async () => {
     // 1) Get query from view
     const query = searchView.getInput();
-    console.log(query);
+    console.log(query); // Testing
 
     if (query) {
         
@@ -111,10 +113,48 @@ const controlRecipe = async () => {
 };
 // https://developer.mozilla.org/en-US/docs/Web/API/Location
 
+/**
+ * Shopping List CONTROLLER
+ */
+const controlShoppingList = () => {
+
+    // Create a new list if there is none yet
+    if (!state.shoppingList) state.shoppingList = new ShoppingList();
+
+    // Add each igredient to the list
+    state.recipe.ingredients.forEach(el => {
+        const item = state.shoppingList.addItem(el.count, el.unit, el.ingredient);
+        shoppingListView.renderItem(item)
+    });
+};
+
+
+
+ /**
+ * Event CONTROLLER
+ */
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
 // Instead of the one above, the one below is better
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+// handle delete and update shopping list events
+elements.shopping.addEventListener('click', e=> {
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+
+    if( e.target.matches('.shopping__delete, .shopping__delete *') ) {
+        //Delete from state
+        state.shoppingList.deleteItem(id);
+
+        //Delete from UI
+        shoppingListView.deleteItem(id);
+
+    } else if (e.target.matches('.shopping__count-value')) {
+        // take the value from the input and update the attribute count in shoppingList model
+        const val = e.target.value;
+        state.shoppingList.updateCount(id, val);
+    }
+});
 
 // Handling recipe button clicks
 elements.recipePage.addEventListener('click', e => {
@@ -132,8 +172,9 @@ elements.recipePage.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
 
+    } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+
+        controlShoppingList();
     }
 
 });
-
-window.l = new ShoppingList();

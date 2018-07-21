@@ -111,6 +111,7 @@ export default class Recipe {
             return objIng;
         });
         this.ingredients = newIngredients;
+        // newIgredients are a list of the processed ingredients (each objIng create through mapping)
     }
 
     updateServings(type) {
